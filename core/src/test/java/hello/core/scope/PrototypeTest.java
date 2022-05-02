@@ -24,8 +24,8 @@ public class PrototypeTest {
         assertThat(prototypeBean1).isNotSameAs(prototypeBean2);
 
         //프로토타입 빈의 경우 종료메서드가 필요시 수동으로 해주어야한다.
-        //prototypeBean1.destroy();
-        //prototypeBean2.destroy();
+        prototypeBean1.destroy();
+        prototypeBean2.destroy();
         ac.close();
     }
 
