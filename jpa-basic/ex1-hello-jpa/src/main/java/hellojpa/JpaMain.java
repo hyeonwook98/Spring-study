@@ -19,11 +19,12 @@ public class JpaMain {
         try {
 
             Member member = new Member();
-            member.setId(2L);
-            member.setUsername("B");
-            member.setRoleType(RoleType.ADMIN);
+            member.setUsername("C");
 
+            System.out.println("===============");
             em.persist(member);
+            System.out.println("member.id = " + member.getId());
+            System.out.println("===============");
 
             tx.commit();
         } catch (Exception e) {
