@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Category {
+public class Category extends BaseEntitiy{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "CATEGORY_ID")
     private Long id;
 
     private String name;
@@ -23,8 +24,7 @@ public class Category {
     @ManyToMany
     @JoinTable(name = "CATEGORY_ITEM",
         joinColumns = @JoinColumn(name = "CATEGORY_ID"),
-        inverseJoinColumns = @JoinColumn(name = "ITEM_ID")
-    )
+        inverseJoinColumns = @JoinColumn(name = "ITEM_ID"))
     private List<Item> items = new ArrayList<>();
 
 }
