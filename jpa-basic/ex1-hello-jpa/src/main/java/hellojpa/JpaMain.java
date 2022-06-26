@@ -1,5 +1,7 @@
 package hellojpa;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -18,15 +20,25 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("asdf");
-            member.setCreatedBy("kim");
-            member.setCreatedDate(LocalDateTime.now());
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
 
-            em.persist(member);
+            Member member1 = new Member();
+            member1.setUsername("member1");
+            member1.setTeam(team);
+            em.persist(member1);
 
             em.flush();
             em.clear();
+
+            Member m = em.find(Member.class, member1.getId());
+
+            System.out.println("m = " + m.getTeam().getClass());
+
+            System.out.println("==========");
+            m.getTeam().getName();
+            System.out.println("==========");
 
             tx.commit();
         } catch (Exception e) {
@@ -37,4 +49,5 @@ public class JpaMain {
 
         emf.close(); //실제 애플리케이션을 종료하고자 할때는 엔티티매니저팩토리를 종료해주어야한다.
     }
+    
 }
