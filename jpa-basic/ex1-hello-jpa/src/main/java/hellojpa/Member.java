@@ -21,7 +21,7 @@ public class Member {
     //주소
     @Embedded
     private Address homeAddress;
-    
+
 
     public Long getId() {
         return id;
