@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb24d99d-8ab9-4fed-8768-247080188a99" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/dialect/MyH2Dialect.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/jpql/JpaMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jpql/JpaMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/jpql/JpaMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/jpql/JpaMain.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,7 +87,7 @@
       <updated>1656484039186</updated>
       <workItem from="1656484040624" duration="3276000" />
       <workItem from="1656577870226" duration="2588000" />
-      <workItem from="1656744930424" duration="9723000" />
+      <workItem from="1656744930424" duration="12465000" />
     </task>
     <servers />
   </component>
