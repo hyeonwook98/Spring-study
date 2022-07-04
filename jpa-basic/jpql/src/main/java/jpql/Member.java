@@ -4,9 +4,14 @@ import javax.persistence.*;
 import javax.persistence.criteria.Fetch;
 
 @Entity
+@NamedQuery(
+        name = "Member.findByUsername",
+        query = "select m from Memberqqq m where m.username =:username"
+)
 public class Member {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private String username;
     private int age;

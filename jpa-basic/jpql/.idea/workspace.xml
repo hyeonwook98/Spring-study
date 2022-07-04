@@ -7,6 +7,7 @@
     <list default="true" id="fb24d99d-8ab9-4fed-8768-247080188a99" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/jpql/JpaMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jpql/JpaMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jpql/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jpql/Member.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +88,7 @@
       <workItem from="1656484040624" duration="3276000" />
       <workItem from="1656577870226" duration="2588000" />
       <workItem from="1656744930424" duration="18377000" />
-      <workItem from="1656896008198" duration="775000" />
+      <workItem from="1656896008198" duration="1733000" />
     </task>
     <servers />
   </component>
