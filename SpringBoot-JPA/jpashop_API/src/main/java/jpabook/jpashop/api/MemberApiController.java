@@ -1,15 +1,13 @@
 package jpabook.jpashop.api;
 
 import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.repository.service.MemberService;
+import jpabook.jpashop.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.xml.transform.Result;
 import java.util.List;
 import java.util.stream.Collectors;
 
