@@ -33,34 +33,49 @@ public class OrderApiController {
         return all;
     }
 
-//    @GetMapping("/api/v2/orders")
-//    public List<OrderDto> orderV2() {
-//        List<Order> orders = orderRepository.findAllByString(new OrderSearch());
-//        List<OrderDto> collect = orders.stream()
-//                .map(o -> new OrderDto(o))
-//                .collect(Collectors.toList());
-//
-//        return collect;
-//    }
-//
-//    @Getter
-//    static class OrderDto {
-//
-//        private Long orderId;
-//        private String name;
-//        private LocalDateTime orderDate;
-//        private OrderStatus orderStatus;
-//        private Address address;
-//        private List<OrderItem> orderItems;
-//
-//        public OrderDto(Order order) {
-//            orderId = order.getId();
-//            name = order.getMember().getName();
-//            orderDate = order.getOrderDate();
-//            orderStatus = order.getStatus();
-//            address = order.getDelivery().getAddress();
-//            orderItems = order.getOrderItems();
-//        }
-//    }
+    @GetMapping("/api/v2/orders")
+    public List<OrderDto> orderV2() {
+        List<Order> orders = orderRepository.findAllByString(new OrderSearch());
+        List<OrderDto> result = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
 
+        return result;
+    }
+
+    @Getter
+    static class OrderDto {
+
+        private Long orderId;
+        private String name;
+        private LocalDateTime orderDate;
+        private OrderStatus orderStatus;
+        private Address address;
+        private List<OrderItemDto> orderItems;
+
+        public OrderDto(Order order) {
+            orderId = order.getId();
+            name = order.getMember().getName();
+            orderDate = order.getOrderDate();
+            orderStatus = order.getStatus();
+            address = order.getDelivery().getAddress();
+            orderItems = order.getOrderItems().stream()
+                    .map(orderItem -> new OrderItemDto(orderItem))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    @Getter
+    static class OrderItemDto {
+
+        private String itemName;//상품명
+        private int orderPrice;//주문가격
+        private int count;//주문수량
+
+        public OrderItemDto(OrderItem orderItem) {
+            itemName = orderItem.getItem().getName();
+            orderPrice = orderItem.getOrderPrice();
+            count = orderItem.getCount();
+        }
+    }
 }
