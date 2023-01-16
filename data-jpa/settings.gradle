@@ -1,0 +1,8 @@
+rootProject.name = 'data-jpa'
+//pluginManagement {
+//    repositories {
+//        mavenCentral()
+//        gradlePluginPortal()
+//    }
+//}
+
