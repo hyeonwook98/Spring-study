@@ -17,12 +17,12 @@ import java.time.LocalDateTime;
 @Getter
 public class BaseEntity extends BaseTimeEntity{
 
-//    @CreatedDate
-//    @Column(updatable = false)
-//    private LocalDateTime createdDate;
-//
-//    @LastModifiedDate
-//    private LocalDateTime lastModifiedDate;
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
 
     @CreatedBy
     @Column(updatable = false)
