@@ -32,7 +32,9 @@ public class SecurityConfig {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/loginForm"); //로그인 페이지를 설정해주지 않으면 인증부분이 해결이 안된다.
+                .loginPage("/loginForm") //로그인 페이지를 설정해주지 않으면 인증부분이 해결이 안된다.
+                .loginProcessingUrl("/login") // /login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해준다. 즉, 별도의 컨트롤러 만들필요없음.
+                .defaultSuccessUrl("/");
 
         return http.build();
     }
