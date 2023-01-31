@@ -2,6 +2,7 @@ package practice.springsecurity.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
@@ -11,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity //스프링 시큐리티 필터가 스프링 필터체인에 등록이 된다.
+@EnableGlobalMethodSecurity(securedEnabled = true,prePostEnabled = true)//secured,preAuthorize,postAuthorize 어노테이션 활성화
 public class SecurityConfig {
 
     //비밀번호 암호화를 위해 사용!
@@ -21,7 +23,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http.csrf().disable();//csrf토큰 비활성화(테스트시 걸어두는게 좋음) 시큐리티는 csrf토큰이 있어야 접근가능함
         http.authorizeRequests()
                 //인증이 필요해!
                 .antMatchers("/user/**").authenticated()
