@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pratice.jwtserver.config.auth.PrincipalDetails;
+import pratice.jwtserver.dto.LoginRequestDto;
 import pratice.jwtserver.model.User;
 
 import javax.servlet.FilterChain;
@@ -34,21 +35,26 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     // /login 요청을 하면 로그인 시도를 위해서 실행되는 함수
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("JwtAuthenticationFilter 로그인 시도중");
+            System.out.println("JwtAuthenticationFilter : 진입");
 
-        //1. username, password 받아서
-        try {
-//            BufferedReader br = request.getReader();
-//
-//            String input = null;
-//            while ((input = br.readLine()) != null) {
-//                System.out.println(input);
-//            }
-            ObjectMapper om = new ObjectMapper();//JSON 데이터를 파싱해줌.
-            User user = om.readValue(request.getInputStream(), User.class);
-            System.out.println("user = " + user);
+            // request에 있는 username과 password를 파싱해서 자바 Object로 받기
+            ObjectMapper om = new ObjectMapper();
+            LoginRequestDto loginRequestDto = null;
+            try {
+                loginRequestDto = om.readValue(request.getInputStream(), LoginRequestDto.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());//토큰 만들기
+            System.out.println("JwtAuthenticationFilter : "+loginRequestDto);
+
+            // 유저네임패스워드 토큰 생성
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequestDto.getUsername(),
+                            loginRequestDto.getPassword());
+
+            System.out.println("JwtAuthenticationFilter : 토큰생성완료");
 
             //PrincipalDetailsService의 loadUserByUsername 함수가 실행된 후 정상이면 authentication이 리턴됨. authentication 로그인 정보가 담김.
             //DB에 있는 username과 password가 일치한다.
@@ -61,11 +67,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             //리턴의 이유는 권한 관리를 security가 대신 해주기 때문에 편하려고 하는것이다.
             //굳이 JWT토큰을 사용하면서 세션을 만들 이유가 없다. 근데 단지 권한 처리 때문에 session에 넣어준다.
             return authentication;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        return null;
     }
 
     //attemptAuthentication실행 후 인증이 정상적으로 되었으면 successfulAuthentication 함수가 실행된다.

@@ -12,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import pratice.jwtserver.config.jwt.JwtAuthenticationFilter;
+import pratice.jwtserver.config.jwt.JwtAuthorizationFilter;
 import pratice.jwtserver.filter.MyFilter3;
 import pratice.jwtserver.repository.UserRepository;
 
@@ -53,7 +54,8 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
             http
                     .addFilter(corsConfig.corsFilter())//CorsConfig에서 만든 필터정보를 넣어준다. 이로써 모든 요청이 이 필터를 거친다.
-                    .addFilter(new JwtAuthenticationFilter(authenticationManager));
+                    .addFilter(new JwtAuthenticationFilter(authenticationManager)) //초기 로그인 시 인증하는 필터 = 인증
+                    .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository)); //로그인 후 토큰 검증하는 필터 = 인가
         }
     }
 }
