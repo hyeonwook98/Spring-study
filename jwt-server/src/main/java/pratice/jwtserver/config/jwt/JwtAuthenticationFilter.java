@@ -1,6 +1,10 @@
 package pratice.jwtserver.config.jwt;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.time.Duration;
+import java.util.Date;
 
 //스프링 시큐리티에서 UsernamePasswordAuthenticationFilter가 있음.
 // /login 요청해서 username,password 전송하면 UsernamePasswordAuthenticationFilter가 동작함.
@@ -49,7 +55,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-            System.out.println("로그인 완료됨 : " + principalDetails.getUsername()); //로그인이 잘 되었다는 뜻!
+            System.out.println("로그인 완료됨 : " + principalDetails.getUser().getUsername()); //로그인이 잘 되었다는 뜻!
 
             //authentication 객체가 session 영역에 저장을 해야되고 그 방법이 return 해주면 된다.
             //리턴의 이유는 권한 관리를 security가 대신 해주기 때문에 편하려고 하는것이다.
@@ -63,9 +69,31 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     //attemptAuthentication실행 후 인증이 정상적으로 되었으면 successfulAuthentication 함수가 실행된다.
-    //여기서 JWT토큰을 만들어서 request요청한 사용자에게 JWT토큰을 response 해주면된다.
+    //여기서 JWT토큰을 만들어서 request 요청한 사용자에게 JWT토큰을 response 해주면된다.
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        super.successfulAuthentication(request, response, chain, authResult);
+
+        Date now = new Date();
+        Date expiration = new Date(now.getTime() + Duration.ofDays(1).toMillis()); // 만료기간 1일
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
+
+//        String jwtToken = Jwts.builder()
+//                .setSubject(principalDetails.getUsername())
+//                .setExpiration(expiration)
+//                .claim("id", principalDetails.getUser().getId())
+//                .claim("username", principalDetails.getUser().getPassword())
+//                .signWith(SignatureAlgorithm.HS256, JwtProperties.SECRET)
+//                .compact();
+
+        String jwtToken = JWT.create()
+                .withSubject(principalDetails.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
+                .withClaim("id", principalDetails.getUser().getId())
+                .withClaim("username", principalDetails.getUser().getUsername())
+                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
+
+        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
+
     }
 }
