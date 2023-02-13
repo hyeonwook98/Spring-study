@@ -10,7 +10,13 @@ import javax.persistence.LockModeType;
 
 public interface StockRepository extends JpaRepository<Stock, Long> {
 
+    // Pessimistic Lock 사용
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     @Query("select s from Stock s where s.id = :id")
     Stock findByIdWithPessimisticLock(@Param("id") Long id);
+
+    // Optimistic Lock 사용
+    @Lock(value = LockModeType.OPTIMISTIC)
+    @Query("select s from Stock s where s.id = :id")
+    Stock findByIdWithOptimisticLock(@Param("id") Long id);
 }
