@@ -15,6 +15,11 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Lock을 잡지 않으므로, Pessimistic Lock(낙관적 락)보다 성능상 이점이 있을 수 있다.
+ * 하지만, 업데이트가 실패했을 경우 재시도 로직이 개발자가 직접 작성을 해주어야 한다.
+ * 또한 충돌이 빈번하게 일어난다면, Pessimistic Lock이 성능상 이점이 더 있을 수 있다.
+ */
 @SpringBootTest
 class OptimisticLockStockFacadeTest {
 
@@ -37,7 +42,7 @@ class OptimisticLockStockFacadeTest {
     }
 
     @Test
-    @DisplayName("동시에_100개의_요청")
+    @DisplayName("Optimistic Lock(비관적 락) 사용")
     public void sameTime_100_Request() throws InterruptedException {
         int threadCount = 100;
         //멀티스레드 이용 ExecutorService : 비동기를 단순하게 처리할 수 있도록 해주는 java api

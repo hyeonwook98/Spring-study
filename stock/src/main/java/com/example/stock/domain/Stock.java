@@ -37,6 +37,6 @@ public class Stock {
             throw new RuntimeException("수량감소초과");
         }
 
-        this.quantity = this.quantity - quantity;
+        this.quantity -= quantity;
     }
 }
