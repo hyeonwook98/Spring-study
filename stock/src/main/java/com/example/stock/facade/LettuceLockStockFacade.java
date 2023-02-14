@@ -4,11 +4,15 @@ import com.example.stock.repository.RedisLockRepository;
 import com.example.stock.service.StockService;
 import org.springframework.stereotype.Component;
 
-/*
-* Lettuce를 활용한 방법은 구현이 간단하다는 장점이 있다.
-* 단점으로는 스핀락 방식으로 진행하기에 동시에 많은 쓰레드가 lock 획득 대기 상태라면 레디스에 부하를 줄 수 있다.
-* -> 그래서 락획득 실패시 Thread.sleep(100)을 통해 재시도에 대한 시간적 텀을 두게 하였다!!
-* */
+/**
+ * 구현이 간단하다.
+ * Spring Data Redis를 이용하면 Lettuce가 기본이기 때문에 별도의 라이브러리를 사용하지 않아도 된다.
+ * Spin Lock 방식이기 때문에 동시에 많은 스레드가 Lock 획득 대기 상태라면 Redis에 부하를 줄 수 있다.
+ * -> 그래서 락획득 실패시 Thread.sleep(100)을 통해 재시도에 대한 시간적 텀을 두게 하였다!!
+ * 실무에서는 재시도가 필요한 Lock의 경우에는 Redission을 활용하고, 그렇지 않을 경우에는 Lettuce을 활용한다.
+ * 재시도가 필요한 경우?: 선착순 100명 까지 물품을 구매할 수 있을 경우
+ * 재시도가 필요하지 않은 경우?: 선착순 한명만 가능, Lock 획득 재시도 할 필요가 없음
+ */
 @Component
 public class LettuceLockStockFacade {
 
