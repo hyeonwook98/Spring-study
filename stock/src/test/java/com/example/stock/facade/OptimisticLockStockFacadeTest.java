@@ -42,7 +42,7 @@ class OptimisticLockStockFacadeTest {
     }
 
     @Test
-    @DisplayName("Optimistic Lock(비관적 락) 사용")
+    @DisplayName("Optimistic Lock(낙관적 락) 사용")
     public void sameTime_100_Request() throws InterruptedException {
         int threadCount = 100;
         //멀티스레드 이용 ExecutorService : 비동기를 단순하게 처리할 수 있도록 해주는 java api
